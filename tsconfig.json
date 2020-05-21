@@ -32,6 +32,7 @@
     "app/style.css",
     "app/style.css.map",
     "app/dist",
+    "dist",
     "dll",
     "app/main.js",
     "app/main.js.map"
