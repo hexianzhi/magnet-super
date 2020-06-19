@@ -31,6 +31,7 @@ if (process.env.NODE_ENV === 'production') {
 
 if (
   process.env.NODE_ENV === 'development' ||
+  process.env.NODE_ENV === 'production' ||
   process.env.DEBUG_PROD === 'true'
 ) {
   require('electron-debug')()
@@ -61,14 +62,17 @@ const createWindow = async () => {
     webPreferences:
       process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
         ? {
-            nodeIntegration: true,
+            nodeIntegration: true
           }
         : {
-            preload: path.join(__dirname, 'dist/renderer.prod.js'),
+            preload: path.join(__dirname, 'renderer.prod.js'),
           },
   })
+  const winURL = process.env.NODE_ENV === 'development'
+  ? `http://localhost:1212/dist/app.html`
+  : `file://${__dirname}/app.html`
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`)
+  mainWindow.loadURL(winURL)
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event

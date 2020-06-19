@@ -12,7 +12,7 @@ import TerserPlugin from 'terser-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
 import DeleteSourceMaps from '../internals/scripts/DeleteSourceMaps';
-
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 CheckNodeEnv('production');
 DeleteSourceMaps();
 
@@ -27,7 +27,6 @@ export default merge.smart(baseConfig, {
 
   output: {
     path: path.join(__dirname, '..', 'dist'),
-    publicPath: './dist/',
     filename: 'renderer.prod.js'
   },
 
@@ -217,6 +216,20 @@ export default merge.smart(baseConfig, {
       analyzerMode:
         process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
       openAnalyzer: process.env.OPEN_ANALYZER === 'true'
-    })
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'app.html',
+      template: path.resolve(__dirname, '..', 'app/app.html'),
+      minify: {
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+        removeComments: true
+      },
+      nodeModules: false
+    }),
+    // new CopyWebpackPlugin([{
+    //   from: path.join(__dirname, '../app/app.html'),
+    //   to: path.join(__dirname, '../dist')
+    // }])
   ]
 });

@@ -14,7 +14,7 @@ import { spawn, execSync } from 'child_process';
 import { TypedCssModulesPlugin } from 'typed-css-modules-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
-
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 // When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
 // at the dev webpack config is not accidentally run in a production environment
 if (process.env.NODE_ENV === 'production') {
@@ -41,7 +41,8 @@ if (!requiredByDLLConfig && !(fs.existsSync(dll) && fs.existsSync(manifest))) {
   execSync('yarn build-dll');
 }
 
-export default merge.smart(baseConfig, {
+
+const test = merge.smart(baseConfig, {
   devtool: 'inline-source-map',
 
   mode: 'development',
@@ -52,8 +53,9 @@ export default merge.smart(baseConfig, {
     ...(process.env.PLAIN_HMR ? [] : ['react-hot-loader/patch']),
     `webpack-dev-server/client?http://localhost:${port}/`,
     'webpack/hot/only-dev-server',
-    require.resolve('../app/index.tsx')
+    path.join(__dirname, '..', 'app/index.tsx')
   ],
+  // entry:  path.join(__dirname, '..', 'app/index.tsx'),
 
   output: {
     publicPath: `http://localhost:${port}/dist/`,
@@ -232,6 +234,16 @@ export default merge.smart(baseConfig, {
 
     new webpack.LoaderOptionsPlugin({
       debug: true
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'app.html',
+      template: path.resolve(__dirname, '..', 'app/app.html'),
+      minify: {
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+        removeComments: true
+      },
+      nodeModules: path.resolve(__dirname, '../node_modules')
     })
   ],
 
@@ -274,3 +286,4 @@ export default merge.smart(baseConfig, {
     }
   }
 });
+export default test
