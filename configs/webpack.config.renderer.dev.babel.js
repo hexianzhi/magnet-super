@@ -23,23 +23,23 @@ if (process.env.NODE_ENV === 'production') {
 
 const port = process.env.PORT || 1212;
 const publicPath = `http://localhost:${port}/dist`;
-const dll = path.join(__dirname, '..', 'dll');
-const manifest = path.resolve(dll, 'renderer.json');
-const requiredByDLLConfig = module.parent.filename.includes(
-  'webpack.config.renderer.dev.dll'
-);
+// const dll = path.join(__dirname, '..', 'dll');
+// const manifest = path.resolve(dll, 'renderer.json');
+// const requiredByDLLConfig = module.parent.filename.includes(
+//   'webpack.config.renderer.dev.dll'
+// );
 
 /**
  * Warn if the DLL is not built
  */
-if (!requiredByDLLConfig && !(fs.existsSync(dll) && fs.existsSync(manifest))) {
-  console.log(
-    chalk.black.bgYellow.bold(
-      'The DLL files are missing. Sit back while we build them for you with "yarn build-dll"'
-    )
-  );
-  execSync('yarn build-dll');
-}
+// if (!requiredByDLLConfig && !(fs.existsSync(dll) && fs.existsSync(manifest))) {
+//   console.log(
+//     chalk.black.bgYellow.bold(
+//       'The DLL files are missing. Sit back while we build them for you with "yarn build-dll"'
+//     )
+//   );
+//   execSync('yarn build-dll');
+// }
 
 
 const test = merge.smart(baseConfig, {
@@ -53,12 +53,13 @@ const test = merge.smart(baseConfig, {
     ...(process.env.PLAIN_HMR ? [] : ['react-hot-loader/patch']),
     `webpack-dev-server/client?http://localhost:${port}/`,
     'webpack/hot/only-dev-server',
-    path.join(__dirname, '..', 'app/index.tsx')
+    path.join(__dirname, '..', 'app/renderer/index.tsx')
   ],
   // entry:  path.join(__dirname, '..', 'app/index.tsx'),
 
   output: {
     publicPath: `http://localhost:${port}/dist/`,
+    libraryTarget: 'commonjs2',
     filename: 'renderer.dev.js'
   },
 
@@ -198,13 +199,13 @@ const test = merge.smart(baseConfig, {
     }
   },
   plugins: [
-    requiredByDLLConfig
-      ? null
-      : new webpack.DllReferencePlugin({
-          context: path.join(__dirname, '..', 'dll'),
-          manifest: require(manifest),
-          sourceType: 'var'
-        }),
+    // requiredByDLLConfig
+    //   ? null
+    //   : new webpack.DllReferencePlugin({
+    //       context: path.join(__dirname, '..', 'dll'),
+    //       manifest: require(manifest),
+    //       sourceType: 'var'
+    //     }),
 
     new webpack.HotModuleReplacementPlugin({
       multiStep: true
