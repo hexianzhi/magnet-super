@@ -1,9 +1,10 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import routes from '../constants/routes.json'
-import styles from './Home.css'
-// import request from '../utils/axios'
+import './Home.css'
 import axios from 'axios'
+import { Input, Button} from 'antd'
+const { Search } = Input
+import 'antd/dist/antd.css';
+// import request from '../utils/axios'
 
 export default function Home() {
   const params = {
@@ -33,9 +34,14 @@ export default function Home() {
   // console.log('-----result----> ', result)
 
   return (
-    <div className={styles.container} data-tid="container">
-      <h2>Home</h2>
-      <Link to={routes.COUNTER}>to Counter</Link>
+    <div>
+      <Button type="primary">Button</Button>
+      <Search
+        placeholder="input search text"
+        enterButton="Search"
+        size="large"
+        onSearch={value => console.log(value)}
+      />
     </div>
   )
 }

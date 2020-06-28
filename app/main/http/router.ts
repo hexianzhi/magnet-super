@@ -1,13 +1,18 @@
 import Router from 'koa-router'
 import Handler from './handler'
 
+
 const prefix = '/api'
-const router = new Router({prefix})
+const router = new Router<any, ICumstomContext>({prefix})
+
 
 router.get('/search', async (ctx) => {
 
   if (ctx.query.keyword) {
+    // 补全 url
     const current = Handler.makeupSearchOption(ctx.query)
+    // console.log('-----current----> ', current)
+    //
     const {originalCount, items} = await Handler.getSearchResult(current, ctx.headers)
 
     ctx.success({

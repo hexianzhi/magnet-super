@@ -1,4 +1,4 @@
-import { IncomingHttpHeaders } from 'http'
+import {IncomingHttpHeaders} from 'http'
 import config from '../defaultConfig'
 import Request from './request'
 import xpath from 'xpath'
@@ -9,12 +9,11 @@ import {loadFilterData, isFilter} from './filter'
 
 let ruleMap = {} as any
 
-
 /**
  * 从网络或者本地更新并缓存规则
  * @returns {Promise<void>}
  */
-async function loadRuleByURL () {
+async function loadRuleByURL() {
   const url = config.ruleUrl
   let rule
   try {
@@ -32,7 +31,7 @@ async function loadRuleByURL () {
   }
   // cacheManager.set('rule_json', JSON.stringify(rule))
 
-  rule.forEach((it: { id: string | number }) => {
+  rule.forEach((it: {id: string | number}) => {
     ruleMap[it.id] = it
   })
   return rule
@@ -46,7 +45,17 @@ async function loadRuleByURL () {
  * @param sort
  * @returns {{id: *, page: *, sort: *, keyword: *, url: *}}
  */
-function makeupSearchOption({id, keyword, page, sort}: {id: string, keyword:string, page:number, sort: string}) {
+function makeupSearchOption({
+  id,
+  keyword,
+  page,
+  sort,
+}: {
+  id: string
+  keyword: string
+  page: number
+  sort: string
+}) {
   const rule = getRuleById(id)
 
   const newPage = Math.max(1, page || 0)
@@ -54,11 +63,15 @@ function makeupSearchOption({id, keyword, page, sort}: {id: string, keyword:stri
   const pathKeys = Object.keys(rule.paths)
   const newSort = pathKeys.indexOf(sort) !== -1 ? sort : pathKeys[0]
   // 拼接完整url
-  const url = rule.url + rule.paths[newSort].replace(/{k}/g, encodeURIComponent(keyword)).replace(/{p}/g, newPage)
+  const url =
+    rule.url +
+    rule.paths[newSort]
+      .replace(/{k}/g, encodeURIComponent(keyword))
+      .replace(/{p}/g, newPage)
   return {id: rule.id, keyword, page: newPage, sort: newSort, url}
 }
 
-function getRuleById (id: string) {
+function getRuleById(id: string) {
   return ruleMap[id] || ruleMap[Object.keys(ruleMap)[0]]
 }
 
@@ -67,14 +80,19 @@ function getRuleById (id: string) {
  * @param param0
  * @param headers
  */
-async function getSearchResult ({id, url}:{id: string, url: string}, headers: IncomingHttpHeaders) {
+async function getSearchResult(
+  {id, url}: {id: string; url: string},
+  headers: IncomingHttpHeaders
+) {
   const rule = getRuleById(id)
-  // TODO: 缓存
+  // 请求网站
   let document = await Request.requestDocument(url, headers)
+  // TODO: 缓存结果
   let items = parseItemsDocument(document, rule.xpath)
 
   // 过滤
   const originalCount = items.length
+  // 过滤
   if (config.filterBare || config.filterEmpty) {
     items = items.filter((item) => {
       if (config.filterBare) {
@@ -94,9 +112,9 @@ async function getSearchResult ({id, url}:{id: string, url: string}, headers: In
  * @param document
  * @param expression xpath表达式对象
  */
-function parseItemsDocument (document: HTMLDocument, expression: any) {
+function parseItemsDocument(document: HTMLDocument, expression: any) {
+  const items: IMagnetItem[] = []
 
-  const items = [] as any[]
   const groupNodes = xpath.select(expression.group, document)
   groupNodes.forEach((item) => {
     const child = item as Node
@@ -106,20 +124,40 @@ function parseItemsDocument (document: HTMLDocument, expression: any) {
     // 分辨率
     const resolution = format.extractResolution(name)
     // 磁力链
-    const magnet = format.extractMagnet(format.extractTextByNode(xpath.select(expression.magnet, child)))
+    const magnet = format.extractMagnet(
+      format.extractTextByNode(xpath.select(expression.magnet, child))
+    )
     // 时间
-    const date = format.extractDate(format.extractTextByNode(xpath.select(expression.date, child)))
+    const date = format.extractDate(
+      format.extractTextByNode(xpath.select(expression.date, child))
+    )
     // 文件大小
-    const size = format.extractFileSize(format.extractTextByNode(xpath.select(expression.size, child)))
+    const size = format.extractFileSize(
+      format.extractTextByNode(xpath.select(expression.size, child))
+    )
     // 人气
-    const hot = expression.hot ? format.extractNumber(format.extractTextByNode(xpath.select(expression.hot, child))) : null
+    const hot = expression.hot
+      ? format.extractNumber(
+          format.extractTextByNode(xpath.select(expression.hot, child))
+        )
+      : 0
     // 详情url
     const detailExps = expression.name + '/@href'
-    const detailUrlText = format.extractTextByNode(xpath.select(detailExps, child))
-    const detailUrl = detailUrlText ? new URI(detailUrlText).hostname('').toString() : null
+    const detailUrlText = format.extractTextByNode(
+      xpath.select(detailExps, child)
+    )
+    const detailUrl = detailUrlText
+      ? new URI(detailUrlText).hostname('').toString()
+      : ''
     if (name) {
       items.push({
-        name, magnet, resolution, date, size, hot, detailUrl
+        name,
+        magnet,
+        resolution,
+        date,
+        size,
+        hot,
+        detailUrl,
       })
     }
   })
@@ -130,5 +168,5 @@ function parseItemsDocument (document: HTMLDocument, expression: any) {
 export default {
   loadRuleByURL,
   makeupSearchOption,
-  getSearchResult
+  getSearchResult,
 }

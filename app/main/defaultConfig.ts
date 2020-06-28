@@ -11,7 +11,7 @@ export default {
   showProxyRule: false,
   // 是否显示源站入口
   showSourceLink: false,
-  // 过滤
+  //  过滤颜色内容
   filterBare: false,
   filterEmpty: false,
   // 自定义服务映射端口

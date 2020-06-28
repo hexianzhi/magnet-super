@@ -3,7 +3,8 @@ import router from './router'
 import cors from '@koa/cors'
 import Handler from './handler'
 import ResponseMiddler from './middleware/response-template'
-const app = new koa()
+
+const app = new koa<any, ICumstomContext>()
 
 let serverInfo: any
 let koaServer: any

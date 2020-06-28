@@ -75,7 +75,7 @@ export default {
         }
       }
     }
-    return null
+    return ''
   },
   /**
    * 提取时间
@@ -156,7 +156,7 @@ export default {
         }
       }
       if (index >= 0) {
-        return extractFloat(extSizeText) * Math.pow(1024, index)
+        return extractFloat(extSizeText) * Math.pow(1024, index) + ''
       }
       return extSizeText
     } else {
