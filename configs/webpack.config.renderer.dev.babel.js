@@ -11,7 +11,7 @@ import webpack from 'webpack';
 import chalk from 'chalk';
 import merge from 'webpack-merge';
 import { spawn, execSync } from 'child_process';
-import { TypedCssModulesPlugin } from 'typed-css-modules-webpack-plugin';
+// import { TypedCssModulesPlugin } from 'typed-css-modules-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
 import HtmlWebpackPlugin from 'html-webpack-plugin'
@@ -88,11 +88,11 @@ const test = merge.smart(baseConfig, {
           {
             loader: 'css-loader',
             options: {
-              modules: {
-                localIdentName: '[name]__[local]__[hash:base64:5]'
-              },
-              sourceMap: true,
-              importLoaders: 1
+              // modules: {
+              //   // localIdentName: '[name]__[local]__[hash:base64:5]'
+              // },
+              // sourceMap: true,
+              // importLoaders: 1
             }
           }
         ]
@@ -124,13 +124,13 @@ const test = merge.smart(baseConfig, {
           },
           {
             loader: 'css-loader',
-            options: {
-              modules: {
-                localIdentName: '[name]__[local]__[hash:base64:5]'
-              },
-              sourceMap: true,
-              importLoaders: 1
-            }
+            // options: {
+            //   modules: {
+            //     // localIdentName: '[name]__[local]__[hash:base64:5]'
+            //   },
+            //   sourceMap: true,
+            //   importLoaders: 1
+            // }
           },
           {
             loader: 'sass-loader'
@@ -211,9 +211,9 @@ const test = merge.smart(baseConfig, {
       multiStep: true
     }),
 
-    new TypedCssModulesPlugin({
-      globPattern: 'app/**/*.{css,scss,sass}'
-    }),
+    // new TypedCssModulesPlugin({
+    //   globPattern: 'app/**/*.{css,scss,sass}'
+    // }),
 
     new webpack.NoEmitOnErrorsPlugin(),
 
