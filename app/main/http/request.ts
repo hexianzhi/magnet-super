@@ -1,5 +1,5 @@
 import URI from 'urijs'
-import config from '../defaultConfig'
+import config from '../../defaultConfig'
 import { OutgoingHttpHeaders, IncomingHttpHeaders } from 'http'
 import axios, { AxiosRequestConfig } from 'axios'
 // import htmlparser2 from 'htmlparser2'

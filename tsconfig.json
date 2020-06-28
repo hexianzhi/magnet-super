@@ -20,7 +20,15 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "allowJs": true
+    "allowJs": true,
+    "baseUrl": "./",
+    "paths": {
+      "m/*": ["app/main/*"],
+      "r/*": ["app/renderer/*"],
+      "app/*": ["app/*"],
+      "static/*": ["static/*"],
+      "root/*": ["*"]
+    }
   },
   "exclude": [
     "test",
@@ -36,5 +44,8 @@
     "dll",
     "app/main.js",
     "app/main.js.map"
-  ]
+  ],
+  "rules": {
+      "no-implicit-dependencies": ["optional", ["app"]]
+    }
 }

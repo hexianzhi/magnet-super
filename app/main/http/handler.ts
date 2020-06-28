@@ -1,5 +1,5 @@
 import {IncomingHttpHeaders} from 'http'
-import config from '../defaultConfig'
+import config from '../../defaultConfig'
 import Request from './request'
 import xpath from 'xpath'
 import URI from 'urijs'

@@ -195,7 +195,11 @@ const test = merge.smart(baseConfig, {
   },
   resolve: {
     alias: {
-      'react-dom': '@hot-loader/react-dom'
+      'react-dom': '@hot-loader/react-dom',
+      static: path.join(__dirname, '../static'),
+      r: path.join(__dirname, '../app/renderer'),
+      m: path.join(__dirname, '../app/main'),
+      app: path.join(__dirname, '../app')
     }
   },
   plugins: [
