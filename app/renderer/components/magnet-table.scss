@@ -1,0 +1,8 @@
+$prefix: 'magnet-table';
+.#{$prefix} {
+ width: calc(100% - 170px);
+ height: 100%;
+ overflow: auto;
+
+
+}

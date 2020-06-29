@@ -1,49 +1,55 @@
 import React, {Component} from 'react'
-import axios from 'axios'
 import {Input, Divider} from 'antd'
 const {Search} = Input
 import logo from 'static/logo.png'
 import SourceList from './source-list'
 import './Home.scss'
-
+import MTable from './magnet-table'
+import http from 'r/utils/axios'
 
 // import request from '../utils/axios'
-
+interface IState {
+  data: IResponse
+}
 const prefix = 'main'
-export default class Home extends Component {
+export default class Home extends Component<any,IState>  {
+
+
   constructor(props: Readonly<{}>) {
     super(props)
+    this.state = {
+      data: {} as IResponse
+    }
   }
 
   componentDidMount() {
+    // const result = request()
+    // console.log('-----result----> ', result)
+  }
+
+
+  search = (value: string)  => {
     const params = {
       id: 'btgg',
       page: 1,
       sort: 'preset',
       url: 'https://www.btgg.cc',
-      keyword: 'fuck',
+      keyword: value,
     }
 
-    let http = axios.create({
-      baseURL: 'http://localhost:3000/api/',
-      timeout: 10000,
-      responseType: 'json',
-    })
-    http
-      .get('search', {
+     http.get('search', {
         params: params,
-      })
-      .then((res) => {
+      }).then((res) => {
         console.log('-----res----> ', res)
-      })
-      .catch((err) => {
+        this.setState({data: res.data})
+      }).catch((err) => {
         console.log('-----err----> ', err)
       })
-    // const result = request()
-    // console.log('-----result----> ', result)
   }
 
   render() {
+    const {data} = this.state
+
     return (
       <div className={prefix}>
         <div className={prefix + '-header'}>
@@ -55,18 +61,18 @@ export default class Home extends Component {
           <Search
             className={prefix + '-search'}
             placeholder="火影忍者"
+            defaultValue="火影忍者"
             enterButton="搜索"
             size="middle"
-            onSearch={(value) => console.log(value)}
+            onSearch={this.search}
           />
           <div className={prefix + '-setting'}>设置</div>
         </div>
         <Divider></Divider>
         <div className={prefix + '-content'}>
           <SourceList></SourceList>
-          {/* <div className={prefix + '-list-source'}> 左侧源站</div> */}
           <Divider type="vertical" style={{height: '100%'}}></Divider>
-          <div className={prefix + '-list-detail'}>右侧磁力详情</div>
+          {data && <MTable data={data}></MTable>}
         </div>
       </div>
     )

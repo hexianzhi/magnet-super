@@ -18,8 +18,8 @@ export default class Souce extends Component {
   render() {
     return (
       <div className={prefix}>
-        {this.data.map(item => (
-          <div className={prefix + '-item'}>
+        {this.data.map((item, index) => (
+          <div className={prefix + '-item'} key={index}>
             <img className={prefix + '-img'} src={Config.icons.baseUrl + '/btgg.ico'}></img>
             <div className={prefix + '-name'}>BTGG</div>
           </div>

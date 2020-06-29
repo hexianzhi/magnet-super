@@ -1,24 +1,19 @@
 [
   {
-    "id": "zhongzisou",
-    "name": "种子搜",
-    "proxy": true,
-    "url": "https://www.dongxingdi.com",
+    "id": "btgg",
+    "name": "BTGG",
+    "proxy": false,
+    "url": "https://www.btgg.cc",
     "paths": {
-      "time": "/list/{k}/{p}",
-      "size": "/list_length/{k}/{p}",
-      "hot": "/list_click/{k}/{p}"
+      "preset": "/search?q={k}&p={p}"
     },
     "xpath": {
-      "group": "//table[@class='table table-bordered table-striped']",
-      "magnet": "./tbody/tr[1]/td/div/h4/a/@href",
-      "name": "./tbody/tr[1]/td/div/h4/a",
-      "size": "./tbody/tr[2]/td[2]/strong",
-      "date": "./tbody/tr[2]/td[1]/strong",
-      "hot": "./tbody/tr[2]/td[3]/strong",
-      "detail": {
-        "files": "//*[@id=\"wrapp\"]/div[2]/div/div/div[3]/div[1]/div[2]/div[2]/select/option"
-      }
+      "group": "//div[@class=\"item\"]",
+      "magnet": "./div[2]/a/@href",
+      "name": "./div[1]/a",
+      "size": "./div[2]/span[1]",
+      "hot": "./div[2]/span[2]",
+      "date": "./div[2]/span[3]"
     }
   },
   {
@@ -45,7 +40,7 @@
     "id": "btsow",
     "name": "BTSOW",
     "proxy": true,
-    "url": "https://btos.pw",
+    "url": "https://btsow.club",
     "paths": {
       "preset": "/search/{k}/page/{p}"
     },
@@ -63,8 +58,8 @@
   {
     "id": "btdet",
     "name": "BT蚂蚁",
-    "proxy": true,
-    "url": "https://btantx.com",
+    "proxy": false,
+    "url": "https://btmayi.iproxy.gq",
     "paths": {
       "time": "/search/{k}-first-asc-{p}",
       "size": "/search/{k}-size-desc-{p}",
@@ -85,8 +80,8 @@
   {
     "id": "bt4g",
     "name": "BT4G",
-    "proxy": true,
-    "url": "https://cn.bt4g.com",
+    "proxy": false,
+    "url": "https://bt4g.org",
     "paths": {
       "time": "/search/{k}/{p}",
       "size": "/search/{k}/bysize/{p}",
@@ -125,6 +120,7 @@
   {
     "id": "btdiguo",
     "name": "BT目录",
+    "proxy": true,
     "url": "https://www.aixiazai.xyz",
     "paths": {
       "time": "/search-update/{k}/page-{p}.html",
@@ -143,7 +139,7 @@
   {
     "id": "cilibao",
     "name": "磁力宝",
-    "url": "http://www.clb.biz",
+    "url": "http://cilibao.biz",
     "paths": {
       "time": "/s/{k}_time_{p}.html",
       "size": "/s/{k}_size_{p}.html",
@@ -161,6 +157,7 @@
   {
     "id": "bthub",
     "name": "BThub",
+    "proxy": true,
     "url": "https://bthub.xyz",
     "paths": {
       "preset": "/main-search-kw-{k}-{p}.html",
@@ -180,7 +177,7 @@
   {
     "id": "btdad",
     "name": " Btdad",
-    "url": "http://www.btdad.bid",
+    "url": "http://www.btdad.best",
     "paths": {
       "preset": "/search-{k}-0-0-{p}.html",
       "size": "/search-{k}-0-1-{p}.html",
@@ -198,6 +195,7 @@
   {
     "id": "alibt",
     "name": " 阿里BT",
+    "proxy": true,
     "url": "https://alibt.pw",
     "paths": {
       "preset": "/zh-cn/s/{p}/{k}"
@@ -228,7 +226,6 @@
   {
     "id": "clzz",
     "name": "磁力蜘蛛",
-    "proxy": true,
     "url": "http://www.eclzz.com",
     "paths": {
       "preset": "/s/{k}_rel_{p}.html",
@@ -269,7 +266,7 @@
   {
     "id": "ciliba",
     "name": " 磁力吧",
-    "url": "http://www.ciliba.bid",
+    "url": "http://www.ciliba.best",
     "paths": {
       "time": "/s/{k}/1/{p}.html",
       "hot": "/s/{k}/3/{p}.html",
@@ -290,7 +287,7 @@
   {
     "id": "btfox",
     "name": " btfox",
-    "url": "http://www.btfox.in",
+    "url": "http://btfox0.com",
     "paths": {
       "time": "/s?wd={k}&sort=time&page={p}",
       "size": "/s?wd={k}&sort=length&page={p}",
@@ -349,9 +346,7 @@
     "proxy": false,
     "url": "https://nyaa.fun",
     "paths": {
-      "time": "?q={k}&p={p}",
-      "size": "?q={k}&s=size&o=desc&p={p}",
-      "hot": "?q={k}&s=downloads&o=desc&p={p}"
+      "preset": "/search/c_{p}_0_k_{k}"
     },
     "xpath": {
       "group": "//div[@class='table-responsive']/table/tbody/tr",
@@ -367,12 +362,10 @@
   {
     "id": "sukebei",
     "name": "Sukebei Nyaa",
-    "proxy": false,
+    "proxy": true,
     "url": "https://sukebei.nyaa.fun",
     "paths": {
-      "time": "?q={k}&p={p}",
-      "size": "?q={k}&s=size&o=desc&p={p}",
-      "hot": "?q={k}&s=downloads&o=desc&p={p}"
+      "preset": "/search/c_{p}_0_k_{k}"
     },
     "xpath": {
       "group": "//div[@class='table-responsive']/table/tbody/tr",
@@ -389,7 +382,7 @@
   {
     "id": "sobt",
     "name": " Sobt",
-    "url": "http://www.sobt5.pw",
+    "url": "http://sobt0.net",
     "paths": {
       "preset": "/q/{k}.html?sort=rel&page={p}",
       "time": "/q/{k}.html?sort=time&page={p}",
