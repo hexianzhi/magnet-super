@@ -9,6 +9,7 @@ $prefix: 'source-list';
     display: flex;
     align-items: center;
     padding-left: 20px;
+    transition: background-color 0.5s;
 
     // justify-content: center;
 
@@ -20,5 +21,8 @@ $prefix: 'source-list';
     .#{$prefix}-name {
       font-weight: 500;
     }
+  }
+  .#{$prefix}-item.active-rule{
+    background-color: #eff2fd;
   }
 }

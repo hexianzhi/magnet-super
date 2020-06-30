@@ -16,7 +16,7 @@ const Format = {
   formatDate (time: number) {
     if (!time) return ''
     const momentTime = moment(time)
-    return momentTime.format(momentTime.hour() === 0 && momentTime.minute() === 0 ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm')
+    return momentTime.format( 'YYYY-MM-DD')
   }
 }
 export default Format

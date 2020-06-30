@@ -14,6 +14,7 @@ import {autoUpdater} from 'electron-updater'
 import log from 'electron-log'
 import server from './http/proxyServer'
 import MenuBuilder from './menu'
+import './ipc'
 
 export default class AppUpdater {
   constructor() {

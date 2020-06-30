@@ -5,6 +5,9 @@ import Handler from './handler'
 const prefix = '/api'
 const router = new Router<any, ICumstomContext>({prefix})
 
+router.get('/load-rule', async (ctx) => {
+  ctx.success(await Handler.loadRuleByURL())
+})
 
 router.get('/search', async (ctx) => {
 

@@ -5,8 +5,7 @@ import {hot} from 'react-hot-loader/root'
 import {History} from 'history'
 import {Store} from '../reducers/types'
 import Routes from '../Routes'
-import {ConfigProvider} from 'antd'
-import zhCN from 'antd/es/locale/zh_CN'
+
 type Props = {
   store: Store
   history: History
@@ -15,9 +14,7 @@ type Props = {
 const Root = ({store, history}: Props) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <ConfigProvider locale={zhCN}>
         <Routes />
-      </ConfigProvider>
     </ConnectedRouter>
   </Provider>
 )

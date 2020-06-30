@@ -9,7 +9,7 @@ import axios from 'axios'
 // const baseURI = config.cloud && config.cloudUrl ? new URI(config.cloudUrl) : new URI(localBaseURL)
 let http = axios.create({
   baseURL: 'http://localhost:3000/api/',
-  timeout: 10000,
+  timeout: 12000,
   responseType: 'json',
 })
 

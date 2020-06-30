@@ -1,6 +1,3 @@
-// declare module 'koa-router'
-// declare module 'koa'
-declare module '@koa/cors'
 declare module '*.css'
 declare module '*.less'
 declare module '*.scss'
@@ -12,6 +9,10 @@ declare module '*.jpeg'
 declare module '*.gif'
 declare module '*.bmp'
 declare module '*.tiff'
+declare module '*.json'
+declare module 'js-base64'
+declare module 'qrcode'
+
 /**
  * 磁力链接数据模型
  */
@@ -76,6 +77,25 @@ interface ISuccessReturnValue {
   items: IMagnetItem[]
 }
 
+
+type IXpath = {[K in keyof IMagnetItem]?: string}
+
+/**
+ * 规则项
+ */
+interface IRuleItem {
+  id: string,
+  name: string,
+  proxy?: boolean,
+  url: string,
+  paths: {
+    preset?: string
+    time?: string,
+    size?: string
+    hot?: string
+  },
+  xpath: IXpath
+}
 
 /**
  * 扩展 koa context 字段

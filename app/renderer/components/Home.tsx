@@ -5,46 +5,77 @@ import logo from 'static/logo.png'
 import SourceList from './source-list'
 import './Home.scss'
 import MTable from './magnet-table'
-import http from 'r/utils/axios'
+// import Event from 'r/utils/event'
+import localRules from 'app/rule.json'
+import testData from './test.json'
 
 // import request from '../utils/axios'
+
 interface IState {
   data: IResponse
+  ruleList: IRuleItem[]
+  activeRule: IRuleItem
 }
 const prefix = 'main'
 export default class Home extends Component<any,IState>  {
-
+  tempValue = ''
 
   constructor(props: Readonly<{}>) {
     super(props)
     this.state = {
-      data: {} as IResponse
+      data: {} as IResponse,
+      ruleList: [],
+      activeRule: {} as IRuleItem
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    // http.get('load-rule').then(res => {
+    //   this.setState({
+    //     // @ts-ignore
+    //     ruleList: res.data
+    //   })
+    // })
+
     // const result = request()
     // console.log('-----result----> ', result)
   }
 
+  onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // @ts-ignore
+    this.tempValue = event.target.value
+  }
 
-  search = (value: string)  => {
-    const params = {
-      id: 'btgg',
-      page: 1,
-      sort: 'preset',
-      url: 'https://www.btgg.cc',
-      keyword: value,
-    }
+  onSearch = (value: string)  => {
+    this.tempValue = value
+    // test
+    this.setState({data: testData.data})
 
-     http.get('search', {
-        params: params,
-      }).then((res) => {
-        console.log('-----res----> ', res)
-        this.setState({data: res.data})
-      }).catch((err) => {
-        console.log('-----err----> ', err)
-      })
+    // const {activeRule} = this.state
+
+    // const params = {
+    //   id: activeRule.id,
+    //   page: 1,
+    //   sort: 'preset',
+    //   url: activeRule.url,
+    //   keyword: value,
+    // }
+
+    //  http.get('search', {
+    //     params: params,
+    //   }).then((res) => {
+    //     console.log('-----res----> ', res)
+    //     this.setState({data: res.data})
+    //   }).catch((err) => {
+    //     console.log('-----err----> ', err)
+    //   })
+  }
+
+  handleRuleChange = (source: IRuleItem) => {
+    this.setState({
+      activeRule: source
+    })
+    if (this.tempValue) this.onSearch(this.tempValue)
   }
 
   render() {
@@ -64,13 +95,14 @@ export default class Home extends Component<any,IState>  {
             defaultValue="火影忍者"
             enterButton="搜索"
             size="middle"
-            onSearch={this.search}
+            onChange={this.onChange}
+            onSearch={this.onSearch}
           />
           <div className={prefix + '-setting'}>设置</div>
         </div>
         <Divider></Divider>
         <div className={prefix + '-content'}>
-          <SourceList></SourceList>
+          <SourceList ruleList={localRules} onSourceChange={this.handleRuleChange}></SourceList>
           <Divider type="vertical" style={{height: '100%'}}></Divider>
           {data && <MTable data={data}></MTable>}
         </div>

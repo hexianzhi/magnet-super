@@ -10,7 +10,7 @@ import XmlDom from 'xmldom'
 let axiosInstance = createRequest()
 
 function createRequest (appConfig?: AxiosRequestConfig) {
-    const defaultTimeout = 5000
+    const defaultTimeout = 10000
 
     const http = axios.create({
       timeout: defaultTimeout

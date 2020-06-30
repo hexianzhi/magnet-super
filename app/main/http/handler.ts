@@ -4,8 +4,8 @@ import Request from './request'
 import xpath from 'xpath'
 import URI from 'urijs'
 import format from './format-parser'
-// import fs from 'fs'
-import {loadFilterData, isFilter} from './filter'
+import {isFilter} from './filter'
+
 
 let ruleMap = {} as any
 
@@ -27,7 +27,7 @@ async function loadRuleByURL() {
     }
   } catch (e) {
     console.error(e.message, '规则加载失败，将使用内置规则')
-    rule = require('./rule.json')
+    rule = require('../../rule.json')
   }
   // cacheManager.set('rule_json', JSON.stringify(rule))
 
@@ -169,4 +169,5 @@ export default {
   loadRuleByURL,
   makeupSearchOption,
   getSearchResult,
+  ruleMap
 }

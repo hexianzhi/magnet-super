@@ -15,8 +15,9 @@ app.use(router.routes()).use(router.allowedMethods())
 
 // async function start (config, preload) {
 async function start() {
-  await Handler.loadRuleByURL()
   try {
+    await Handler.loadRuleByURL()
+    console.log('-----I am loloadRuleByURLg end!!')
     // const customPort = config.customServerPort ? config.customServerPortValue : undefined
     // const port = config.port || customPort
     const port = 3000
