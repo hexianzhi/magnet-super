@@ -4,5 +4,12 @@ $prefix: 'magnet-table';
  height: 100%;
  overflow: auto;
 
+ .ant-table-wrapper {
+   padding-bottom: 100px;
+   .ant-space {
+    display: flex;
+    flex-wrap: wrap;
+   }
+ }
 
 }

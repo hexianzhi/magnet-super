@@ -4,18 +4,19 @@ import './source-list.scss'
 import {message, Table} from 'antd'
 import './magnet-table.scss'
 import Format from 'r/utils/format'
-import Clipboard from 'clipboard'
 import Operation from './operation'
+import Clipboard from 'clipboard'
 
 const prefix = 'magnet-table'
 
+interface IState {
+  currentPage: number
+}
 interface IProps {
   data: IResponse
+  isLoading: boolean
+  onPageChange: (page: number) => void
 }
-
-// interface IState {
-//   dataList: IResponse[]
-// }
 
 interface ITableData extends Omit<IMagnetItem, 'date'> {
   key?: number
@@ -54,32 +55,45 @@ const columns = [
 ]
 
 
-export default class MagnetTable extends Component<IProps> {
+export default class MagnetTable extends Component<IProps, IState> {
+  clipboard: any
+
   constructor(props: Readonly<IProps>) {
     super(props)
+    this.state = {
+      currentPage:  props.data.current && props.data.current.page || 1
+    }
   }
 
   componentDidMount() {
-    const clipboard =  new Clipboard('.copylink')
-    clipboard.on('success', function(e) {
+    this.clipboard = new Clipboard('.copylink')
+    this.clipboard.on('success', function(e: { clearSelection: () => void }) {
       message.success('复制成功')
       e.clearSelection()
     })
   }
 
   componentWillUnmount () {
-    // clipboard.
+    this.clipboard.destroy()
+  }
+
+  onPageChange = (page: number) => {
+    this.setState({
+      currentPage: page
+    })
+    this.props.onPageChange(page)
   }
 
   render() {
-    const {data} = this.props
+    const {data,isLoading} = this.props
+    const {currentPage } = this.state
 
-    const page = data.current && data.current.page || 0
     let tableData: IMagnetItem[] = []
     if (data.items) {
       tableData = data.items.map((it, index) => {
         const item = {} as ITableData
         item.key = index
+        // TODO: fix 切换后缓存
         item.size = Format.formatSize(it.size)
         item.date = Format.formatDate(it.date)
         return Object.assign(it, item)
@@ -91,9 +105,16 @@ export default class MagnetTable extends Component<IProps> {
         <Table
           //@ts-ignore
           columns={columns}
+          loading={isLoading}
           dataSource={tableData}
-          pagination={{current: page, position: ['bottomCenter']}}
-          scroll={{ x: '100%' }}
+          pagination={{
+            current: currentPage,
+            position: ['bottomCenter'],
+            onChange: this.onPageChange,
+            pageSize: 20,
+            total: 1000,
+            showSizeChanger: false
+          }}
         />
       </div>
     )

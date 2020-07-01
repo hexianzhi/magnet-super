@@ -1,11 +1,10 @@
-import React from 'react'
-import {Space} from 'antd'
+import React, { useEffect } from 'react'
+import {message, Space} from 'antd'
 import {Base64} from 'js-base64'
 import {shell} from 'electron'
 import QrCode from './operation-qrcode'
 
 const Operation = (props: {record: IMagnetItem}) => {
-
   const {record} = props
 
   const handleXiaoMi = () => {

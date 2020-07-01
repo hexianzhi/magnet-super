@@ -14,7 +14,6 @@ interface IState {
 
 export default class Souce extends Component<IProps, IState> {
 
-
   constructor (props: Readonly<IProps>) {
     super(props)
     this.state = {
