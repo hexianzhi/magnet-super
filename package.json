@@ -288,7 +288,7 @@
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.16",
     "urijs": "^1.19.2",
-    "xmldom": "^0.3.0",
+    "xmldom": "^0.5.0",
     "xpath": "^0.0.27"
   },
   "devEngines": {
